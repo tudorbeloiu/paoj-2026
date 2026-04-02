@@ -5,45 +5,69 @@ import com.pao.laboratory07.exercise1.exceptions.CannotRevertInitialOrderStateEx
 import com.pao.laboratory07.exercise1.exceptions.OrderIsAlreadyFinalException;
 
 import java.util.Scanner;
+import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) {
+        Stack<StareComanda> st = new Stack<>();
         Scanner scanner = new Scanner(System.in);
         // Part A
         // load initial state
-        OrderState initialState = OrderState.valueOf(scanner.next());
-        Order order = new Order(initialState);
-        System.out.println("Initial order state: " + initialState);
+        String initialStateString = scanner.next();
+        StareComanda stareCurenta = StareComanda.valueOf(initialStateString);
+        System.out.println("Initial order state: " + stareCurenta);
 
         while (true) {
-            OrderCommand orderCommand = OrderCommand.valueOf(scanner.next());
+            String orderCommand = scanner.next();
+
             switch (orderCommand) {
-                case next -> {
-                    try {
-                        order.nextState();
-                    } catch (OrderIsAlreadyFinalException e) {
-                        System.out.println("Order is already in a final state.");
+                case "next":
+                    try{
+                        if(stareCurenta.isFinal()){
+                            throw new OrderIsAlreadyFinalException();
+                        }
+                        st.push(stareCurenta);
+                        stareCurenta = stareCurenta.moveNext();
+                        System.out.println("Order state updated to: " + stareCurenta);
                     }
-                }
-                case cancel -> {
-                    try {
-                        order.cancel();
-                    } catch (CannotCancelFinalOrderException e) {
-                        System.out.println("Cannot cancel a final state order.");
+                    catch(OrderIsAlreadyFinalException e){
+                        System.out.println(e.getMessage());
                     }
-                }
-                case undo -> {
-                    try {
-                        order.undoState();
-                    } catch (CannotRevertInitialOrderStateException e) {
-                        System.out.println("Cannot undo the initial order state.");
+                    break;
+
+                case "cancel":
+                    try{
+                        if(stareCurenta.isFinal()){
+                            throw new CannotCancelFinalOrderException();
+                        }
+                        st.push(stareCurenta);
+                        stareCurenta = StareComanda.CANCELED;
+                        System.out.println("Order has been canceled.");
                     }
-                }
-                case QUIT -> {
+                    catch(CannotCancelFinalOrderException e){
+                        System.out.println(e.getMessage());
+                    }
+
+                    break;
+
+                case "undo":
+                    try{
+                        if(st.isEmpty()){
+                            throw new CannotRevertInitialOrderStateException();
+                        }
+                        stareCurenta = st.pop();
+                        System.out.println("Order state reverted to: " + stareCurenta);
+                    }
+                    catch(CannotRevertInitialOrderStateException e){
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+
+                case "QUIT":
                     System.out.println("User quit the program.");
                     return;
-                }
             }
+
         }
     }
 }

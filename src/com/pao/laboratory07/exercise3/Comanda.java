@@ -1,0 +1,24 @@
+package com.pao.laboratory07.exercise3;
+
+import com.pao.laboratory07.exercise1.StareComanda;
+
+public abstract sealed class Comanda permits ComandaStandard, ComandaRedusa, ComandaGratuita {
+    protected String nume;
+    protected StareComanda stare;
+    protected String client;
+
+    public Comanda(String nume, String client){
+        this.nume = nume;
+        this.stare = StareComanda.PLACED;
+        this.client = client;
+    }
+    public abstract double pretFinal();
+    public abstract String descriere(boolean withStare);
+
+    public String getClient(){
+        return client;
+    }
+    public String getNume(){
+        return nume;
+    }
+}
