@@ -24,6 +24,75 @@ public class Main {
         //   [id] data tip: suma RON | contSursa -> contDestinatie
         //   Ex: [1] 2024-01-15 CREDIT: 1500.00 RON | RO01SRC1 -> RO01DST1
 
-        System.out.println("TODO: implementează exercițiul 1");
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        List<Tranzactie> tranzactii = new ArrayList<>();
+
+        scanner.nextLine();
+
+        for(int i=0; i<n; i++){
+            String[] parts = scanner.nextLine().split(" ");
+            int id = Integer.parseInt(parts[0]);
+            double suma = Double.parseDouble(parts[1]);
+            String data = parts[2];
+            String contSursa = parts[3];
+            String contDestinatie = parts[4];
+            TipTranzactie tip = TipTranzactie.valueOf(parts[5]);
+
+            Tranzactie t = new Tranzactie(id, suma, data, contSursa, contDestinatie, tip, null);
+            t.setNote("procesat");
+            tranzactii.add(t);
+        }
+
+        new File("output").mkdirs();
+
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("output/lab09_ex1.ser"))){
+            oos.writeObject(tranzactii);
+        }
+
+        List<Tranzactie> deserializate = new ArrayList<>();
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("output/lab09_ex1.ser"))){
+            deserializate = (List<Tranzactie>) ois.readObject();
+        }
+
+
+        while(scanner.hasNextLine()){
+            String linie = scanner.nextLine();
+            if(linie.isEmpty()){
+                continue;
+            }
+
+            if(linie.equals("LIST")){
+                for(Tranzactie t: deserializate){
+                    System.out.println(t);
+                }
+            }
+            else if(linie.startsWith("FILTER")){
+                String dataSmek = linie.substring(7).trim();
+                List<Tranzactie> filtrate = deserializate.stream()
+                        .filter(t -> t.getData().startsWith(dataSmek))
+                        .toList();
+                if(filtrate.size() == 0){
+                    System.out.println("Niciun rezultat.");
+                }
+                else{
+                    for(Tranzactie t: filtrate){
+                        System.out.println(t);
+                    }
+                }
+            }
+            else if(linie.startsWith("NOTE")){
+                int id = Integer.parseInt(linie.split(" ")[1]);
+                Optional<Tranzactie> tr = deserializate.stream()
+                        .filter(t -> t.getId() == id)
+                        .findFirst();
+                if(!tr.isEmpty()){
+                    System.out.println("NOTE[" + id + "]: " + tr.get().getNote());
+                }
+                else{
+                    System.out.println("NOTE[" + id + "]: not found");
+                }
+            }
+        }
     }
 }
