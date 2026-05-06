@@ -1,0 +1,44 @@
+nume_actiune,timestamp
+Add buyer,2026-05-06T12:59:33
+Add seller,2026-05-06T12:59:33
+Find user by email,2026-05-06T12:59:33
+Update buyer,2026-05-06T12:59:33
+Update seller,2026-05-06T12:59:33
+Print all users,2026-05-06T12:59:33
+Add new category,2026-05-06T12:59:33
+Update category,2026-05-06T12:59:33
+Show all categories,2026-05-06T12:59:33
+Add physical product,2026-05-06T12:59:33
+Add digital product,2026-05-06T12:59:33
+Find product by id,2026-05-06T12:59:33
+Find product by id,2026-05-06T12:59:33
+Update physical product,2026-05-06T12:59:33
+Find product by id,2026-05-06T12:59:33
+Update digital product,2026-05-06T12:59:33
+Show all products,2026-05-06T12:59:33
+Create auction,2026-05-06T12:59:33
+Get auctions by seller,2026-05-06T12:59:33
+Create auction,2026-05-06T12:59:33
+Get auctions by seller,2026-05-06T12:59:33
+Show active auctions,2026-05-06T12:59:33
+Get auctions by category,2026-05-06T12:59:33
+Get auctions by seller,2026-05-06T12:59:33
+Show auctions in interval,2026-05-06T12:59:33
+Show bids for auction,2026-05-06T12:59:33
+Place bid,2026-05-06T12:59:33
+Place bid,2026-05-06T12:59:33
+Add buyer,2026-05-06T12:59:33
+Place bid,2026-05-06T12:59:33
+Show bids for auction,2026-05-06T12:59:33
+Close Auction,2026-05-06T12:59:33
+Add physical product,2026-05-06T12:59:33
+Create auction,2026-05-06T12:59:33
+Get auctions by seller,2026-05-06T12:59:33
+Cancel auction,2026-05-06T12:59:33
+Print all transactions,2026-05-06T12:59:33
+Print transactions made by user,2026-05-06T12:59:33
+Show unread notifications,2026-05-06T12:59:33
+Mark notification as read,2026-05-06T12:59:33
+Show unread notifications,2026-05-06T12:59:33
+Get active auctions with product details,2026-05-06T12:59:33
+Get the bidders and the number of bids for each one,2026-05-06T12:59:33
